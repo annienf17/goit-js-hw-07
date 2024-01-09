@@ -1,4 +1,4 @@
-Przedstawiony przez Ciebie kod używa biblioteki JavaScript o nazwie `basicLightbox`, aby utworzyć galerię z oknami modalnymi. Oto kod wraz z pewnymi wyjaśnieniami:
+Przedstawiony kod używa biblioteki JavaScript o nazwie `basicLightbox`, aby utworzyć galerię z oknami modalnymi. Oto kod wraz z pewnymi wyjaśnieniami:
 
 ```javascript
 "use strict";
@@ -47,12 +47,11 @@ gallery.addEventListener("click", event => {
 });
 ```
 
-W tym kodzie tablica `galleryItems` jest importowana z zewnętrznego pliku `gallery-items.js`. Każdy element tablicy zawiera informacje o obrazie, takie jak adres URL podglądu obrazu, adres URL oryginalnego obrazu i opis.
-
+W tym kodzie tablica `galleryItems` jest importowana z zewnętrznego pliku `gallery-items.js`. 
+Każdy element tablicy zawiera informacje o obrazie, takie jak adres URL podglądu obrazu, adres URL oryginalnego obrazu i opis.
 Stała `galleryImages` generuje ciąg elementów HTML "<li>" z obrazami, korzystając z metody `map()` na tablicy `galleryItems`.
-
 Obrazy galerii są następnie wstawiane do DOM za pomocą metody `insertAdjacentHTML()` na elemencie `gallery`.
-
-Do elementu `gallery` dodany jest słuchacz zdarzeń dla kliknięcia. Po kliknięciu obrazu słuchacz zdarzeń sprawdza, czy kliknięty element ma atrybut `data-source`. Jeśli ma, tworzone jest okno modalne z klikniętym obrazem za pomocą metody `basicLightbox.create()`. Metoda `show()` jest wywoływana, aby wyświetlić okno modalne.
-
-Dodatkowo, do dokumentu dodany jest słuchacz zdarzeń dla zdarzenia "keydown". Jeśli zostanie naciśnięty klawisz "Escape", okno modalne zostanie zamknięte poprzez wywołanie metody `close()` na obiekcie `instance`.
+Do elementu `gallery` dodany jest słuchacz zdarzeń dla kliknięcia. Po kliknięciu obrazu słuchacz zdarzeń sprawdza, czy kliknięty element ma atrybut `data-source`. 
+Jeśli ma, tworzone jest okno modalne z klikniętym obrazem za pomocą metody `basicLightbox.create()`. Metoda `show()` jest wywoływana, aby wyświetlić okno modalne.
+Dodatkowo, do dokumentu dodany jest słuchacz zdarzeń dla zdarzenia "keydown". Jeśli zostanie naciśnięty klawisz "Escape", okno modalne zostanie zamknięte 
+poprzez wywołanie metody `close()` na obiekcie `instance`.
