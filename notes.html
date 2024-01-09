@@ -1,1 +1,58 @@
+Przedstawiony przez Ciebie kod używa biblioteki JavaScript o nazwie `basicLightbox`, aby utworzyć galerię z oknami modalnymi. Oto kod wraz z pewnymi wyjaśnieniami:
 
+```javascript
+"use strict";
+
+// Zaimportuj tablicę elementów galerii z innego pliku
+import { galleryItems } from './gallery-items.js';
+
+// Wybierz element .gallery z HTML
+const gallery = document.querySelector(".gallery");
+
+// Utwórz tablicę elementów <li> zawierających obrazy
+const galleryImages = galleryItems.map((img) => 
+    `<li class="gallery__item">
+        <a class="gallery__link" href="${img.original}">
+            <img class="gallery__image" src="${img.preview}" data-source="${img.original}" alt="${img.description}" />
+        </a>
+    </li>`
+).join("");
+
+// Wstaw obrazy galerii do elementu .gallery
+gallery.insertAdjacentHTML("afterbegin", galleryImages);
+
+// Dodaj słuchacza zdarzeń na kliknięcie elementu .gallery
+gallery.addEventListener("click", event => {
+    // Zapobiegnij domyślnemu zachowaniu przeglądarki
+    event.preventDefault();
+
+    // Sprawdź, czy kliknięty element ma atrybut "data-source"
+    if (!event.target.dataset.source) {
+        return;
+    }
+
+    // Pokaż kliknięty obraz w oknie modalnym za pomocą basicLightbox
+    const instance = basicLightbox.create(`
+        <img src="${event.target.dataset.source}">
+    `);
+    
+    instance.show();
+
+    // Dodaj słuchacza zdarzeń dla zamknięcia okna modalnego
+    document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") {
+            instance.close();
+        }
+    });
+});
+```
+
+W tym kodzie tablica `galleryItems` jest importowana z zewnętrznego pliku `gallery-items.js`. Każdy element tablicy zawiera informacje o obrazie, takie jak adres URL podglądu obrazu, adres URL oryginalnego obrazu i opis.
+
+Stała `galleryImages` generuje ciąg elementów HTML "<li>" z obrazami, korzystając z metody `map()` na tablicy `galleryItems`.
+
+Obrazy galerii są następnie wstawiane do DOM za pomocą metody `insertAdjacentHTML()` na elemencie `gallery`.
+
+Do elementu `gallery` dodany jest słuchacz zdarzeń dla kliknięcia. Po kliknięciu obrazu słuchacz zdarzeń sprawdza, czy kliknięty element ma atrybut `data-source`. Jeśli ma, tworzone jest okno modalne z klikniętym obrazem za pomocą metody `basicLightbox.create()`. Metoda `show()` jest wywoływana, aby wyświetlić okno modalne.
+
+Dodatkowo, do dokumentu dodany jest słuchacz zdarzeń dla zdarzenia "keydown". Jeśli zostanie naciśnięty klawisz "Escape", okno modalne zostanie zamknięte poprzez wywołanie metody `close()` na obiekcie `instance`.
